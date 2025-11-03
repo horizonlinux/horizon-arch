@@ -101,7 +101,7 @@ RUN echo "[horizon-pacman]" >> /etc/pacman.conf && \
   echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
   echo "Server = https://horizonlinux.github.io/pacman/\$arch" >> /etc/pacman.conf && \
   pacman -Syyuu --noconfirm plasma-setup-git && \
-  pacman -S --clean && \
+  pacman -S --noconfirm --clean && \
   rm -rf /var/cache/pacman/pkg/* && \
   systemctl enable plasma-setup && \
 
