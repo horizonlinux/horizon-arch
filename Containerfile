@@ -97,8 +97,8 @@ RUN pacman -Syyuu --noconfirm \
   systemctl enable NetworkManager && \
   systemctl enable sddm
 
-RUN echo "[horizon-pacman]\nSigLevel = Optional TrustAll\nServer = https://horizonlinux.github.io/pacman/\$arch" && \
-    pacman -Syyuu --noconfirm plasma-setup-git && \
+RUN echo "[horizon-pacman]\nSigLevel = Optional TrustAll\nServer = https://horizonlinux.github.io/pacman/\$arch" >> /etc/pacman.conf && \
+  pacman -Syyuu --noconfirm plasma-setup-git && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/* && \
   systemctl enable plasma-setup && \
