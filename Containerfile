@@ -39,71 +39,74 @@ RUN pacman -Rns --noconfirm ${DEV_DEPS}
 RUN sh -c 'export KERNEL_VERSION="$(basename "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" && \
     dracut --force --no-hostonly --reproducible --zstd --verbose --kver "$KERNEL_VERSION"  "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"'
 
-RUN pacman -Syyuu --noconfirm \
-       aurorae \
-       bluedevil \
-       breeze \
-       breeze-gtk \
-       drkonqi \
-       flatpak-kcm \
-       kactivitymanagerd \
-       kde-cli-tools \
-       kde-gtk-config \
-       kdecoration \
-       kdeplasma-addons \
-       kglobalacceld \
-       kinfocenter \
-       kmenuedit \
-       knighttime \
-       kpipewire \
-       kscreen \
-       kscreenlocker \
-       ksshaskpass \
-       ksystemstats \
-       kwallet-pam \
-       kwayland \
-       kwin \
-       kwrited \
-       layer-shell-qt \
-       libkscreen \
-       libksysguard \
-       libplasma \
-       milou \
-       ocean-sound-theme \
-       plasma-activities \
-       plasma-activities-stats \
-       plasma-browser-integration \
-       plasma-desktop \
-       plasma-disks \
-       plasma-firewall \
-       plasma-integration \
-       plasma-nm \
-       plasma-pa \
-       plasma-systemmonitor \
-       plasma-thunderbolt \
-       plasma-vault \
-       plasma-welcome \
-       plasma-workspace \
-       plasma-workspace-wallpapers \
-       polkit-kde-agent \
-       powerdevil \
-       print-manager \
-       sddm-kcm \
-       spectacle \
-       systemsettings \
-       xdg-desktop-portal-kde && \
+RUN pacman -Syyuu --noconfirm gnome networkmanager && \
+#pacman -Syyuu --noconfirm \
+    #   aurorae \
+    #   bluedevil \
+    #   breeze \
+    #   breeze-gtk \
+    #   dolphin \
+    #   drkonqi \
+    #   flatpak-kcm \
+    #   kactivitymanagerd \
+    #   kde-cli-tools \
+    #   kde-gtk-config \
+    #   kdecoration \
+    #   kglobalacceld \
+    #   kinfocenter \
+    #   kmenuedit \
+    #   knighttime \
+    #   konsole \
+    #   kpipewire \
+    #   pipewire
+    #   kscreen \
+    #   kscreenlocker \
+    #   ksshaskpass \
+    #   ksystemstats \
+    #   kwallet-pam \
+    #   kwayland \
+    #   kwin \
+    #   kwrited \
+    #   layer-shell-qt \
+    #   libkscreen \
+    #   libksysguard \
+    #   libplasma \
+    #   ocean-sound-theme \
+    #   plasma-activities \
+    #   plasma-activities-stats \
+    #   plasma-browser-integration \
+    #   plasma-desktop \
+    #   plasma-disks \
+    #   plasma-firewall \
+    #   plasma-integration \
+    #   plasma-nm \
+    #   plasma-pa \
+    #   plasma-systemmonitor \
+    #   plasma-thunderbolt \
+    #   plasma-vault \
+    #   plasma-welcome \
+    #   plasma-workspace \
+    #   plasma-workspace-wallpapers \
+    #   polkit-kde-agent \
+    #   powerdevil \
+    #   print-manager \
+    #   sddm-kcm \
+    #   spectacle \
+    #   systemsettings \
+    #   xdg-desktop-portal-kde && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/* && \
-  systemctl enable NetworkManager && \
-  systemctl enable sddm
+  systemctl enable gdm && \
+  systemctl enable NetworkManager
+  #systemctl enable sddm
 
-RUN echo "[horizon-pacman]" >> /etc/pacman.conf && \
-  echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
-  echo "Server = https://horizonlinux.github.io/pacman/\$arch" >> /etc/pacman.conf && \
-  pacman -Syyuu --noconfirm plasma-setup-git && \
+RUN #echo "[horizon-pacman]" >> /etc/pacman.conf && \
+  #echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
+  #echo "Server = https://horizonlinux.github.io/pacman/\$arch" >> /etc/pacman.conf && \
+  #pacman -Syyuu --noconfirm plasma-setup-git && \
   pacman -S --noconfirm --clean && \
-  rm -rf /var/cache/pacman/pkg/* && \
-  systemctl enable plasma-setup
+  rm -rf /var/cache/pacman/pkg/*
+  #systemctl enable plasma-setup
 
 RUN rm -rf /var /boot /home /root /usr/local /srv && \
     mkdir -p /var /boot /sysroot && \
