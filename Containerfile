@@ -54,7 +54,7 @@ RUN pacman -Syyuu --noconfirm \
        knighttime \
        konsole \
        kpipewire \
-       pipewire
+       pipewire \
        kscreen \
        kscreenlocker \
        ksshaskpass \
