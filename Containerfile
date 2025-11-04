@@ -95,13 +95,13 @@ RUN pacman -Syyuu --noconfirm \
   systemctl enable NetworkManager && \
   systemctl enable sddm
 
-RUN #echo "[horizon-pacman]" >> /etc/pacman.conf && \
-  #echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
-  #echo "Server = https://horizonlinux.github.io/pacman/\$arch" >> /etc/pacman.conf && \
-  #pacman -Syyuu --noconfirm plasma-setup-git && \
+RUN echo "[horizon-pacman]" >> /etc/pacman.conf && \
+  echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
+  echo "Server = https://horizonlinux.github.io/pacman/\$arch" >> /etc/pacman.conf && \
+  pacman -Syyuu --noconfirm plasma-setup-git && \
   pacman -S --noconfirm --clean && \
   rm -rf /var/cache/pacman/pkg/*
-  #systemctl enable plasma-setup
+  systemctl enable plasma-setup
 
 # ---------------------------
 # Generate reproducible dracut initramfs
@@ -112,8 +112,11 @@ RUN KVER=$(basename "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E '*
            --add ostree "/usr/lib/modules/$KVER/initramfs.img" && \
     rm kernel_version.txt
 
-RUN rm -rf /var /boot /home /root /usr/local /srv && \
-    mkdir -p /var /boot /sysroot && \
+RUN rm -rf /boot /home /root /usr/local /srv && \
+    mkdir -p /var && \
+    mkdir -p /var/home && \
+    mkdir -p /var/roothome && \
+    mkdir -p /var/srv && \
     ln -s /var/home /home && \
     ln -s /var/roothome /root && \
     ln -s /var/srv /srv && \
