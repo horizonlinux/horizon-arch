@@ -113,7 +113,7 @@ RUN KVER=$(basename "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E '*
     rm kernel_version.txt
 
 RUN rm -rf /boot /home /root /usr/local /srv && \
-    mkdir -p /var && \
+    mkdir -p /var /boot /sysroot && \
     mkdir -p /var/home && \
     mkdir -p /var/roothome && \
     mkdir -p /var/srv && \
