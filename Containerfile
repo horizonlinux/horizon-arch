@@ -22,6 +22,7 @@ RUN pacman -Sy --noconfirm \
       glib2 \
       ostree \
       shadow \
+      sudo \
       ${DEV_DEPS} && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
@@ -40,75 +41,49 @@ RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     pacman -S --clean --noconfirm
 
 RUN pacman -Syyuu --noconfirm \
-       aurorae \
-       bluedevil \
-       breeze \
-       breeze-gtk \
-       dolphin \
-       drkonqi \
-       flatpak-kcm \
-       kactivitymanagerd \
-       kde-cli-tools \
-       kde-gtk-config \
-       kdecoration \
-       kglobalacceld \
-       kinfocenter \
-       kmenuedit \
-       knighttime \
-       konsole \
-       kpipewire \
-       pipewire \
-       kscreen \
-       kscreenlocker \
-       ksshaskpass \
-       ksystemstats \
-       kwallet-pam \
-       kwayland \
-       kwin \
-       kwrited \
-       layer-shell-qt \
-       libkscreen \
-       libksysguard \
-       libplasma \
-       ocean-sound-theme \
-       plasma-activities \
-       plasma-activities-stats \
-       plasma-browser-integration \
-       plasma-desktop \
-       plasma-disks \
-       plasma-firewall \
-       plasma-integration \
-       plasma-nm \
-       plasma-pa \
-       plasma-systemmonitor \
-       plasma-thunderbolt \
-       plasma-vault \
-       plasma-welcome \
-       plasma-workspace \
-       plasma-workspace-wallpapers \
-       polkit-kde-agent \
-       powerdevil \
-       print-manager \
-       sddm-kcm \
-       spectacle \
-       systemsettings \
-       xdg-desktop-portal-kde && \
+       gdm \
+       gnome-backgrounds \
+       gnome-color-manager \
+       gnome-control-center \
+       gnome-disk-utility \
+       gnome-initial-setup \
+       gnome-keyring \
+       gnome-menus \
+       gnome-session \
+       gnome-settings-daemon \
+       gnome-shell \
+       gnome-user-share \
+       grilo-plugins \
+       gvfs \
+       gvfs-afc \
+       gvfs-dnssd \
+       gvfs-goa \
+       gvfs-google \
+       gvfs-gphoto2 \
+       gvfs-mtp \
+       gvfs-nfs \
+       gvfs-onedrive \
+       gvfs-smb \
+       gvfs-wsdd\
+       malcontent \
+       nautilus \
+       networkmanager \
+       orca \
+       ptyxis \
+       rygel \
+       sushi \
+       tecla \
+       xdg-desktop-portal-gnome \
+       xdg-user-dirs-gtk && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/* && \
   systemctl enable NetworkManager && \
-  systemctl enable sddm
-
-RUN echo "[horizon-pacman]" >> /etc/pacman.conf && \
-  echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
-  echo "Server = https://horizonlinux.github.io/pacman/\$arch" >> /etc/pacman.conf && \
-  pacman -Syyuu --noconfirm plasma-setup-git && \
-  pacman -S --noconfirm --clean && \
-  rm -rf /var/cache/pacman/pkg/* && \
-  systemctl enable plasma-setup
+  systemctl enable gdm
 
 # Setup a temporary root passwd (changeme) for dev purposes
 # RUN pacman -S 
 # RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
+
 RUN rm -rf /boot /home /root /usr/local /srv && \
     mkdir -p /var/{home,roothome,srv} /sysroot /boot && \
     ln -s sysroot/ostree /ostree
