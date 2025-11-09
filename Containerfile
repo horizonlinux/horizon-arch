@@ -13,7 +13,7 @@ RUN pacman -Sy --noconfirm \
       linux \
       linux-firmware \
       ostree \
-      systemd \
+      systemd=258.1 \
       btrfs-progs \
       e2fsprogs \
       xfsprogs \
