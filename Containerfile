@@ -113,8 +113,9 @@ RUN useradd -m --shell=/bin/bash build && usermod -L build && \
 
 USER build
 WORKDIR /home/build
-RUN git clone https://aur.archlinux.org/plasma-setup-git.git /tmp/kiss
-    cd /tmp/kiss && makepkg -si --noconfirm
+RUN git clone https://aur.archlinux.org/plasma-setup-git.git /tmp/kiss && \
+    cd /tmp/kiss && \ 
+    makepkg -si --noconfirm
 
 USER root
 WORKDIR /
