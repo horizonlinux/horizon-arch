@@ -7,13 +7,13 @@ COPY system_files /
 ENV DEV_DEPS="base-devel git rust"
 
 ENV DRACUT_NO_XATTR=1
-RUN pacman -Sy --noconfirm \
+RUN pacman -Syu --noconfirm \
       base \
       dracut \
       linux \
       linux-firmware \
       ostree \
-      systemd=258.1 \
+      systemd \
       btrfs-progs \
       e2fsprogs \
       xfsprogs \
