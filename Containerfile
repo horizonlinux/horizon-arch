@@ -104,7 +104,7 @@ RUN pacman -Syyuu --noconfirm \
 RUN systemd-sysusers
 
 RUN echo "[horizon-pacman]" >> /etc/pacman.conf && \
-echo "SigLevel = Optional TrustAll\" >> /etc/pacman.conf && \
+echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
 echo "Server = https://horizonlinux.github.io/pacman/x86_64" >> /etc/pacman.conf && \
   pacman -Syyuu --noconfirm plasma-setup-git && \
   pacman -S --clean && \
