@@ -2,6 +2,8 @@ FROM scratch AS ctx
 
 FROM docker.io/archlinux/archlinux:latest
 
+COPY system_files /
+
 ENV DEV_DEPS="base-devel git rust"
 
 ENV DRACUT_NO_XATTR=1
@@ -86,6 +88,9 @@ RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
 
 RUN rm -rf /boot /home /root /usr/local /srv && \
     mkdir -p /var/{home,roothome,srv} /sysroot /boot && \
+    ln -s /var/home /home && \
+    ln -s /var/roothome /root && \
+    ln -s /var/srv /srv && \
     ln -s sysroot/ostree /ostree
 
 # Update useradd default to /var/home instead of /home for User Creation
