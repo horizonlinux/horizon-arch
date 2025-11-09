@@ -28,7 +28,9 @@ RUN pacman -Sy --noconfirm \
       open-vm-tools \
       ${DEV_DEPS} && \
   pacman -S --clean && \
-  rm -rf /var/cache/pacman/pkg/*
+  rm -rf /var/cache/pacman/pkg/* && \
+  systemctl enable vmtoolsd.service && \
+  systemctl enable vmware-vmblock-fuse.service
 
 # Workaround due to dracut version bump, please remove eventually
 # FIXME: remove
@@ -40,10 +42,10 @@ RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     make bin install-all install-initramfs-dracut && \
     sh -c 'export KERNEL_VERSION="$(basename "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" && \
     dracut --force --no-hostonly --reproducible --zstd --verbose --kver "$KERNEL_VERSION"  "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"' && \
-    pacman -Rns --noconfirm base-devel git rust && \
     pacman -S --clean --noconfirm
 
 RUN pacman -Syyuu --noconfirm \
+       glibc-locales \
        aurorae \
        bluedevil \
        breeze \
@@ -101,15 +103,25 @@ RUN pacman -Syyuu --noconfirm \
   systemctl enable NetworkManager && \
   systemctl enable sddm
 
-RUN systemd-sysusers
+# Create build user
+RUN useradd -m --shell=/bin/bash build && usermod -L build && \
+    cp /etc/sudoers /etc/sudoers.bak && \
+    echo "build ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+    echo "root ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+    chown build:build /packages
 
-RUN echo "[horizon-pacman]" >> /etc/pacman.conf && \
-echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
-echo "Server = https://horizonlinux.github.io/pacman/x86_64" >> /etc/pacman.conf && \
-  pacman -Syyuu --noconfirm plasma-setup-git && \
-  pacman -S --clean && \
-  rm -rf /var/cache/pacman/pkg/* && \
-  systemctl enable plasma-setup
+USER build
+WORKDIR /home/build
+RUN git clone https://aur.archlinux.org/plasma-setup-git.git /tmp/kiss
+    cd /tmp/kiss && makepkg -si --noconfirm
+
+USER root
+WORKDIR /
+
+RUN userdel build && mv /etc/sudoers.bak /etc/sudoers && \
+    pacman -Rns --noconfirm base-devel git rust
+
+RUN systemctl enable plasma-setup && systemd-sysusers
 
 # Setup a temporary root passwd (changeme) for dev purposes
 RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
