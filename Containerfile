@@ -62,11 +62,17 @@ RUN pacman -Syu --noconfirm \
       shadow \
       sudo \
       open-vm-tools \
+      nano \
+      vi \
       ${DEV_DEPS} && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/* && \
   systemctl enable vmtoolsd.service && \
   systemctl enable vmware-vmblock-fuse.service
+
+RUN echo "%wheel      ALL=(ALL:ALL) ALL" >> /etc/sudoers && \
+sed -i '/Defaults env_reset/c\Defaults env_reset,pwfeedback' /etc/sudoers && \
+pacman -Qo /usr/share/pixmaps/archlinux-logo.svg > /etc/logopackage.txt
 
 RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
 
@@ -150,9 +156,7 @@ RUN pacman -Syyuu --noconfirm \
        systemsettings \
        xdg-desktop-portal-kde && \
   pacman -S --clean && \
-  rm -rf /var/cache/pacman/pkg/* && \
-  systemctl enable NetworkManager && \
-  systemctl enable sddm
+  rm -rf /var/cache/pacman/pkg/
 
 RUN systemd-sysusers
 
@@ -161,8 +165,11 @@ echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
 echo "Server = https://horizonlinux.github.io/pacman/x86_64" >> /etc/pacman.conf && \
   pacman -Syyuu --noconfirm plasma-setup-git && \
   pacman -S --clean && \
-  rm -rf /var/cache/pacman/pkg/* && \
-  systemctl enable plasma-setup
+  rm -rf /var/cache/pacman/pkg/*
+
+RUN systemctl enable plasma-setup.service && \
+  systemctl enable NetworkManager && \
+  systemctl enable sddm
 
 # Setup a temporary root passwd (changeme) for dev purposes
 RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
