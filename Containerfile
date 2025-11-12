@@ -198,14 +198,7 @@ RUN mkdir -p /usr/lib/ostree && \
 
 RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
 
-RUN echo "TESTING OS-RELEASE" && \
-pacman -Qo /etc/os-release && \
-pacman -Qo /usr/lib/os-release && \
-echo "TESTING OS-RELEASE IS COMPLETED" && \
-echo "TESTING OS-RELEASE IS COMPLETED" && \
-echo "TESTING OS-RELEASE IS COMPLETED" && \
-echo "TESTING OS-RELEASE IS COMPLETED" && \
-echo "TESTING OS-RELEASE IS COMPLETED" && \
-echo "TESTING OS-RELEASE IS COMPLETED"
+RUN echo "LISTING ALL PACKAGES" && \
+pacman -Q > /installed-packages
 
 RUN bootc container lint
