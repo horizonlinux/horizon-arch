@@ -43,7 +43,13 @@ COPY system_files /
 ENV DEV_DEPS="base-devel git rust"
 
 ENV DRACUT_NO_XATTR=1
+
+RUN echo "[horizon-pacman]" >> /etc/pacman.conf && \
+echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
+echo "Server = https://horizonlinux.github.io/pacman/x86_64" >> /etc/pacman.conf
+
 RUN pacman -Syu --noconfirm \
+      filesystem-horizon \
       base \
       dracut \
       linux \
@@ -156,18 +162,16 @@ RUN pacman -Syyuu --noconfirm \
 
 RUN systemd-sysusers
 
-RUN echo "[horizon-pacman]" >> /etc/pacman.conf && \
-echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
-echo "Server = https://horizonlinux.github.io/pacman/x86_64" >> /etc/pacman.conf && \
-  pacman -Syyuu --noconfirm plasma-setup-git && \
+RUN pacman -Syyuu --noconfirm plasma-setup-git && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
 
 RUN systemctl enable sddm && \
   systemctl enable NetworkManager && \
-  systemctl enable plasma-setup.service && \
-  systemctl enable vmtoolsd.service && \
-  systemctl enable vmware-vmblock-fuse.service
+  systemctl enable plasma-setup.service
+#  systemctl enable plasma-setup.service && \
+#  systemctl enable vmtoolsd.service && \
+#  systemctl enable vmware-vmblock-fuse.service
 
 # Setup a temporary root passwd (changeme) for dev purposes
 # RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
