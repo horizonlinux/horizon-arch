@@ -169,6 +169,7 @@ RUN pacman -Syyuu --noconfirm \
        kwallet-pam \
        kwayland \
        kwin \
+       kwrite \
        kwrited \
        layer-shell-qt \
        libkscreen \
@@ -236,13 +237,16 @@ RUN systemctl enable sddm && \
 # Clean up
 RUN rm -rf /var/cache/pacman/pkg/ && \
 	rm -rf /tmp/* && \
-	echo "NoDisplay=true" >> /usr/share/applications/vim.desktop && \
-	echo "Hidden=true" >> /usr/share/applications/lstopo.desktop && \
-	echo "Hidden=true" >> /usr/share/applications/avahi-discover.desktop && \
-	echo "Hidden=true" >> /usr/share/applications/bssh.desktop && \
-	echo "Hidden=true" >> /usr/share/applications/bvnc.desktop && \
-	echo "Hidden=true" >> /usr/share/applications/qv4l2.desktop && \
-	echo "Hidden=true" >> /usr/share/applications/qvidcap.desktop
+	rm -rf /usr/share/applications/vim.desktop && \
+	rm -rf /usr/share/applications/micro.desktop && \
+	rm -rf /usr/share/applications/system-config-printer.desktop && \
+	rm -rf /usr/share/applications/cups.desktop && \
+	rm -rf /usr/share/applications/lstopo.desktop && \
+	rm -rf /usr/share/applications/avahi-discover.desktop && \
+	rm -rf /usr/share/applications/bssh.desktop && \
+	rm -rf /usr/share/applications/bvnc.desktop && \
+	rm -rf /usr/share/applications/qv4l2.desktop && \
+	rm -rf /usr/share/applications/qvidcap.desktop
 
 # Setup a temporary root passwd (changeme) for dev purposes
 # RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
