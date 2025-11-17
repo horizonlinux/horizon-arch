@@ -39,6 +39,13 @@ jobs:
           # Lowercase the image uri
           echo "IMAGE_REGISTRY=${IMAGE_REGISTRY,,}" >> ${GITHUB_ENV}
           echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+          
+      # Give us back the precious disk space, sadly loger build times
+      - name: Maximize Build Space
+        if: matrix.platform == 'amd64'
+        uses: ublue-os/remove-unwanted-software@cc0becac701cf642c8f0a6613bbdaf5dc36b259e # v9
+        with:
+          remove-codeql: true
 
       # These stage versions are pinned by https://github.com/renovatebot/renovate
       - name: Checkout
