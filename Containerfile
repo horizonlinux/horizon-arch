@@ -109,8 +109,8 @@ RUN pacman -Syu --noconfirm --overwrite "*" \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
 
-RUN echo "%wheel      ALL=(ALL:ALL) ALL" >> /etc/sudoers && \
-sed -i '/Defaults env_reset/c\Defaults env_reset,pwfeedback' /etc/sudoers
+RUN echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers && \
+echo "Defaults env_reset,pwfeedback" >> /etc/sudoers
 
 # Workaround due to dracut version bump, please remove eventually
 # FIXME: remove
@@ -205,7 +205,7 @@ USER build
 WORKDIR /home/build
 RUN git clone https://aur.archlinux.org/plasma-setup-git.git /tmp/kiss && \
     cd /tmp/kiss && \ 
-    makepkg -si --noconfirm
+    makepkg -sri --noconfirm
 
 USER root
 WORKDIR /
@@ -217,14 +217,25 @@ RUN userdel build && mv /etc/sudoers.bak /etc/sudoers && \
 RUN systemd-sysusers
 
 RUN systemctl enable sddm && \
+sed -i '/Current=/c\Current=breeze' /usr/lib/sddm/sddm.conf.d/default.conf && \
+sed -i '/CursorSize=/c\CursorSize=24' /usr/lib/sddm/sddm.conf.d/default.conf && \
+sed -i '/CursorTheme=/c\CursorTheme=breeze_cursors' /usr/lib/sddm/sddm.conf.d/default.conf && \
   systemctl enable NetworkManager && \
   systemctl enable plasma-setup.service
 #  systemctl enable plasma-setup.service && \
 #  systemctl enable vmtoolsd.service && \
 #  systemctl enable vmware-vmblock-fuse.service
 
+# Clean up
 RUN rm -rf /var/cache/pacman/pkg/ && \
-	rm -rf /tmp/*
+	rm -rf /tmp/* && \
+	echo "NoDisplay=true" >> /usr/share/applications/vim.desktop && \
+	echo "Hidden=true" >> /usr/share/applications/lstopo.desktop && \
+	echo "Hidden=true" >> /usr/share/applications/avahi-discover.desktop && \
+	echo "Hidden=true" >> /usr/share/applications/bssh.desktop && \
+	echo "Hidden=true" >> /usr/share/applications/bvnc.desktop && \
+	echo "Hidden=true" >> /usr/share/applications/qv4l2.desktop && \
+	echo "Hidden=true" >> /usr/share/applications/qvidcap.desktop
 
 # Setup a temporary root passwd (changeme) for dev purposes
 # RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
