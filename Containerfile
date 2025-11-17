@@ -211,7 +211,8 @@ USER root
 WORKDIR /
 
 RUN userdel build && mv /etc/sudoers.bak /etc/sudoers && \
-    pacman -Rns --noconfirm base-devel rust
+    pacman -Rns --noconfirm base-devel rust && \
+	  pacman -S --clean
 
 RUN systemd-sysusers
 
@@ -221,6 +222,9 @@ RUN systemctl enable sddm && \
 #  systemctl enable plasma-setup.service && \
 #  systemctl enable vmtoolsd.service && \
 #  systemctl enable vmware-vmblock-fuse.service
+
+RUN rm -rf /var/cache/pacman/pkg/ && \
+	rm -rf /tmp/*
 
 # Setup a temporary root passwd (changeme) for dev purposes
 # RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
