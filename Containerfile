@@ -177,6 +177,9 @@ RUN pacman -Syyuu --noconfirm \
        libplasma \
        milou \
        ocean-sound-theme \
+       pipewire \
+       pipewire-audio \
+       pipewire-pulse \
        plasma-activities \
        plasma-activities-stats \
        plasma-browser-integration \
@@ -198,7 +201,8 @@ RUN pacman -Syyuu --noconfirm \
        sddm-kcm \
        spectacle \
        systemsettings \
-       xdg-desktop-portal-kde && \
+       xdg-desktop-portal-kde \
+       wireplumber && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/
 
@@ -211,8 +215,13 @@ USER build
 WORKDIR /home/build
 RUN git clone https://aur.archlinux.org/plasma-setup-git.git /tmp/kiss && \
     cd /tmp/kiss && \ 
+    makepkg -sri --noconfirm && \
+	git clone https://aur.archlinux.org/bazaar.git /tmp/bazzar && \
+    cd /tmp/bazzar && \ 
+    makepkg -sri --noconfirm && \
+	git clone https://aur.archlinux.org/krunner-bazaar.git /tmp/bazzar-krunner && \
+    cd /tmp/bazzar-krunner && \ 
     makepkg -sri --noconfirm
-
 USER root
 WORKDIR /
 
@@ -246,9 +255,6 @@ RUN rm -rf /var/cache/pacman/pkg/ && \
 	rm -rf /usr/share/applications/bvnc.desktop && \
 	rm -rf /usr/share/applications/qv4l2.desktop && \
 	rm -rf /usr/share/applications/qvidcap.desktop
-
-# Setup a temporary root passwd (changeme) for dev purposes
-# RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
 
 RUN rm -rf /boot /home /root /usr/local /srv && \
     mkdir -p /var/{home,roothome,srv} /sysroot /boot && \
