@@ -73,7 +73,6 @@ RUN pacman -Syu --noconfirm --overwrite "*" \
       glibc \
       ostree \
       mkinitcpio \
-      shadow \
       sudo \
       open-vm-tools \
       plymouth \
@@ -103,12 +102,10 @@ RUN pacman -Syu --noconfirm --overwrite "*" \
 	libimobiledevice \
 	man-db \
 	rclone \
-	systemd \
 	tuned \
 	tuned-ppd \
 	unzip \
 	vim \
-	micro \
 	whois \
       ${DEV_DEPS} && \
   pacman -S --clean && \
@@ -250,7 +247,6 @@ RUN systemctl enable sddm && \
 RUN rm -rf /var/cache/pacman/pkg/ && \
 	rm -rf /tmp/* && \
 	rm -rf /usr/share/applications/vim.desktop && \
-	rm -rf /usr/share/applications/micro.desktop && \
 	rm -rf /usr/share/applications/system-config-printer.desktop && \
 	rm -rf /usr/share/applications/cups.desktop && \
 	rm -rf /usr/share/applications/lstopo.desktop && \
