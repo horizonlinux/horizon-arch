@@ -116,7 +116,7 @@ echo "Defaults env_reset,pwfeedback" >> /etc/sudoers
 
 # Workaround due to dracut version bump, please remove eventually
 # FIXME: remove
-RUN echo -e "systemdsystemconfdir=/etc/systemd/system\nsystemdsystemunitdir=/usr/lib/systemd/system\n" | tee /etc/dracut.conf.d/fix-bootc.conf
+# RUN echo -e "systemdsystemconfdir=/etc/systemd/system\nsystemdsystemunitdir=/usr/lib/systemd/system\n" | tee /etc/dracut.conf.d/fix-bootc.conf
 
 RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     git clone https://github.com/bootc-dev/bootc.git /tmp/bootc && \
