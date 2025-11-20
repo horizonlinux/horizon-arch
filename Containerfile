@@ -239,7 +239,7 @@ RUN systemctl enable sddm && \
   systemctl enable NetworkManager && \
   systemctl enable bluetooth && \
 # enable sysexts for later released sysexts like ones containg Wine, Steam, and drivers.
-  sysremctl enable systemd-sysext && \
+  systemctl enable systemd-sysext && \
   systemctl enable cups && \
   systemctl enable plasma-setup.service
 #  systemctl enable plasma-setup.service && \
