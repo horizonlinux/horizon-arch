@@ -1,0 +1,2 @@
+io.github.kolunmi.Bazaar
+org.kde.konsole

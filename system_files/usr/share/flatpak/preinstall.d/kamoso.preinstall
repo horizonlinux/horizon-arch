@@ -1,0 +1,3 @@
+[Flatpak Preinstall org.kde.kamoso]
+Branch=stable
+IsRuntime=false

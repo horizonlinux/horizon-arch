@@ -117,11 +117,10 @@ echo "Defaults env_reset,pwfeedback" >> /etc/sudoers
 RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     git clone "https://github.com/bootc-dev/bootc.git" /tmp/bootc && \
     make -C /tmp/bootc bin install-all && \
-    mkdir -p /etc/dracut.conf.d && \
     printf "systemdsystemconfdir=/etc/systemd/system\nsystemdsystemunitdir=/usr/lib/systemd/system\n" | tee /usr/lib/dracut/dracut.conf.d/30-bootcrew-fix-bootc-module.conf && \
-    printf 'hostonly=no\nadd_dracutmodules+=" ostree bootc "' | tee /usr/lib/dracut/dracut.conf.d/30-bootcrew-bootc-modules.conf && \
-    sh -c 'export KERNEL_VERSION="$(basename "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" && \
-    dracut --force --no-hostonly --reproducible --zstd --verbose --kver "$KERNEL_VERSION" "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"' && \
+    printf 'reproducible=yes\nhostonly=no\ncompress=zstd\nadd_dracutmodules+=" ostree bootc "' | tee "/usr/lib/dracut/dracut.conf.d/30-bootcrew-bootc-container-build.conf" && \
+    plymouth-set-default-theme tribar && \
+    dracut --force "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)/initramfs.img" && \
     pacman -S --clean --noconfirm
 
 RUN pacman -Syyuu --noconfirm \
@@ -133,7 +132,6 @@ RUN pacman -Syyuu --noconfirm \
        breeze-gtk \
        dolphin \
        drkonqi \
-       flatpak \
        flatpak-kcm \
        horizon-wallpapers \
        kaccounts-integration \
@@ -163,7 +161,6 @@ RUN pacman -Syyuu --noconfirm \
        kwallet-pam \
        kwayland \
        kwin \
-       kwrite \
        kwrited \
        layer-shell-qt \
        libkscreen \
@@ -207,7 +204,10 @@ RUN useradd -m --shell=/bin/bash build && usermod -L build && \
 
 USER build
 WORKDIR /home/build
-RUN git clone https://aur.archlinux.org/plasma-setup-git.git /tmp/kiss && \
+RUN git clone https://aur.archlinux.org/flatpak-git.git /tmp/flatpak && \
+    cd /tmp/bazzar-krunner && \
+    makepkg -sri --noconfirm && \
+    git clone https://aur.archlinux.org/plasma-setup-git.git /tmp/kiss && \
     cd /tmp/kiss && \ 
     makepkg -sri --noconfirm && \
 	git clone https://aur.archlinux.org/bazaar.git /tmp/bazzar && \

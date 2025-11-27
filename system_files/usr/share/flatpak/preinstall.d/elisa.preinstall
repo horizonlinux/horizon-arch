@@ -1,0 +1,3 @@
+[Flatpak Preinstall org.kde.elisa]
+Branch=stable
+IsRuntime=false

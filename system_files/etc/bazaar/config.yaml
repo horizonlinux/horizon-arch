@@ -1,0 +1,195 @@
+css: |
+  .horizon-section banner {
+     margin-top: 0px;
+     margin-left: 0px;
+     margin-right: 0px;
+     margin-bottom: 0px;
+     border-radius: 0px;
+  }
+  .horizon-section banner-text-overlay {
+     margin: 0px;
+     padding: 0px;
+  }
+  .horizon-section banner-text {
+     margin-top: 20px;
+     margin-left: 20px;
+     color: #ffffff;
+     font-size: 10px;
+  }
+  .horizon-section title {
+     color: #ffffff;
+  }
+  .horizon-section subtitle {
+    color: var(--accent-color);
+    filter: brightness(1.25);
+    font-weight: 400;
+  }
+  .horizon-section entry {
+     background: linear-gradient(to right, alpha(var(--accent-color), 0.2), alpha(var(--accent-bg-color), 0.1));
+     transition-property: background;
+     transition-duration: 0.25s;
+  }
+  .horizon-section entry:hover {
+     background: linear-gradient(to right, alpha(var(--accent-bg-color), 0.5), alpha(var(--accent-color), 0.7));
+     transition-property: background;
+     transition-duration: 0.75s;
+  }
+  .horizon-section entry:active {
+     background: linear-gradient(to right, alpha(var(--accent-bg-color), 0.5), alpha(var(--accent-color), 0.7));
+     transition-property: background;
+     transition-duration: 0.15s;
+  }
+
+sections:
+  - title: "Must Haves"
+    subtitle: "Enchance your experience"
+    rows: 2
+    banner-text-halign: start
+    banner-height: 100
+    classes:
+      - horizon-section
+    appids:
+      - com.ranfdev.DistroShelf
+      - org.keepassxc.KeePassXC
+      - org.libreoffice.LibreOffice
+      - org.localsend.localsend_app
+      - io.github.nozwock.Packet
+      - org.mozilla.Thunderbird
+
+  - title: "Browsers"
+    subtitle: "Explore the web with your favorite browser"
+    rows: 3
+    banner-text-halign: start
+    banner-height: 100
+    classes:
+      - horizon-section
+    appids:
+      - com.brave.Browser
+      - org.chromium.Chromium
+      - org.mozilla.firefox
+      - one.ablaze.floorp
+      - com.google.Chrome
+      - io.gitlab.librewolf-community
+      - com.microsoft.Edge
+      - com.opera.Opera
+      - io.github.ungoogled_software.ungoogled_chromium
+      - org.gnome.Epiphany
+      - com.vivaldi.Vivaldi
+      - app.zen_browser.zen
+
+  - title: "Communication"
+    subtitle: "Talk to people you love"
+    rows: 3
+    banner-text-halign: start
+    banner-height: 100
+    classes:
+      - horizon-section
+    appids:
+      - in.cinny.Cinny
+      - com.discordapp.Discord
+      - im.riot.Riot
+      - org.gnome.Geary
+      - org.gnome.Polari
+      - me.proton.Mail
+      - org.signal.Signal
+      - org.telegram.desktop
+      - org.mozilla.Thunderbird
+      - dev.vencord.Vesktop
+      - com.viber.Viber
+      - com.ktechpit.whatsie
+
+  - title: "Multimedia"
+    subtitle: "Best apps to enjoy yourself"
+    rows: 2
+    banner-text-halign: start
+    banner-height: 100
+    classes:
+      - horizon-section
+    appids:
+      - com.github.wwmm.easyeffects
+      - com.github.johnfactotum.Foliate
+      - com.github.iwalton3.jellyfin-media-player
+      - tv.plex.PlexDesktop
+      - org.gnome.Podcasts
+      - org.gnome.Rhythmbox3
+      - com.spotify.Client
+      - rocks.shy.VacuumTube
+      - org.videolan.VLC
+
+  - title: "Office & Productivity"
+    subtitle: "Get things done with the best software"
+    rows: 3
+    banner-text-halign: start
+    banner-height: 100
+    classes:
+      - horizon-section
+    appids:
+      - org.ardour.Ardour
+      - org.audacityteam.Audacity
+      - de.leopoldluley.Clapgrep
+      - org.gimp.GIMP
+      - org.inkscape.Inkscape
+      - org.kde.kdenlive
+      - org.kde.krita
+      - org.libreoffice.LibreOffice
+      - md.obsidian.Obsidian
+      - com.obsproject.Studio
+      - org.onlyoffice.desktopeditors
+      - io.github.alainm23.planify
+
+  - title: "Games"
+    subtitle: "Everyone needs to relax"
+    rows: 3
+    banner-text-halign: start
+    banner-height: 100
+    classes:
+      - horizon-section
+    appids:
+      - org.gnome.Aisleriot
+      - org.wesnoth.Wesnoth
+      - com.feaneron.Boatswain
+      - com.heroicgameslauncher.hgl
+      - net.lutris.Lutris
+      - com.vysp3r.ProtonPlus
+      - net.hhoney.rota
+      - uk.org.greenend.chiark.sgtatham.puzzles
+      - com.valvesoftware.Steam
+      - com.valvesoftware.SteamLink
+      - org.supertuxproject.SuperTux
+      - net.supertuxkart.SuperTuxKart
+
+  - title: "Utilities"
+    subtitle: "Useful apps for different needs"
+    rows: 2
+    banner-text-halign: start
+    banner-height: 100
+    classes:
+      - horizon-section
+    appids:
+      - com.github.zocker_160.SyncThingy
+      - org.fedoraproject.MediaWriter
+      - org.raspberrypi.rpi-imager
+      - io.github.seadve.Mousai
+      - com.rafaelmardojai.SharePreview
+      - io.github.giantpinkrobots.varia
+      - re.sonny.OhMySVG
+      - io.github.flattool.Warehouse
+      - com.github.tchx84.Flatseal
+
+  - title: "Develop"
+    subtitle: "and contribute to your favourite apps"
+    rows: 2
+    banner-text-halign: start
+    banner-height: 100
+    classes:
+      - horizon-section
+    appids:
+      - io.podman_desktop.PodmanDesktop
+      - io.kinvolk.Headlamp
+      - sh.loft.devpod
+      - org.gnome.Builder
+      - com.getpostman.Postman
+      - io.dbeaver.DBeaverCommunity
+      - cc.arduino.IDE2
+      - com.visualstudio.code
+      - org.gnome.Gtranslator
