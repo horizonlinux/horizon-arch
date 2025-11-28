@@ -114,6 +114,22 @@ RUN pacman -Syu --noconfirm --overwrite "*" \
 RUN echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers && \
 echo "Defaults env_reset,pwfeedback" >> /etc/sudoers
 
+# Create build user
+RUN useradd -m --shell=/bin/bash build && usermod -L build && \
+    cp /etc/sudoers /etc/sudoers.bak && \
+    echo "build ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+USER build
+WORKDIR /home/build
+RUN git clone https://aur.archlinux.org/flatpak-git.git /tmp/flatpak && \
+    cd /tmp/flatpak && \
+    makepkg -sri --noconfirm
+USER root
+WORKDIR /
+
+RUN userdel build && mv /etc/sudoers.bak /etc/sudoers && \
+	  pacman -S --clean
+
 RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     git clone "https://github.com/bootc-dev/bootc.git" /tmp/bootc && \
     make -C /tmp/bootc bin install-all && \
@@ -204,10 +220,7 @@ RUN useradd -m --shell=/bin/bash build && usermod -L build && \
 
 USER build
 WORKDIR /home/build
-RUN git clone https://aur.archlinux.org/flatpak-git.git /tmp/flatpak && \
-    cd /tmp/flatpak && \
-    makepkg -sri --noconfirm && \
-    git clone https://aur.archlinux.org/plasma-setup-git.git /tmp/kiss && \
+RUN git clone https://aur.archlinux.org/plasma-setup-git.git /tmp/kiss && \
     cd /tmp/kiss && \ 
     makepkg -sri --noconfirm && \
 	git clone https://aur.archlinux.org/bazaar.git /tmp/bazzar && \
