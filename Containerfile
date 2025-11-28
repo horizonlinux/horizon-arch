@@ -40,7 +40,7 @@ FROM docker.io/archlinux/archlinux:latest
 
 COPY system_files /
 
-ENV DEV_DEPS="base-devel git rust"
+ENV DEV_DEPS="base-devel git rust go-md2man"
 
 ENV DRACUT_NO_XATTR=1
 
