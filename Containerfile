@@ -259,7 +259,7 @@ RUN rm -rf /var/cache/pacman/pkg/ && \
 	rm -rf /usr/share/applications/designer.desktop && \
 	rm -rf /usr/share/applications/linguist.desktop && \
 	rm -rf /usr/share/applications/qdbusviewer.desktop && \
-	rm -rf /usr/share/applications/tunes-gui.desktop
+	rm -rf /usr/share/applications/tuned-gui.desktop
 
 RUN rm -rf /boot /home /root /usr/local /srv && \
     mkdir -p /var/{home,roothome,srv} /sysroot /boot && \
