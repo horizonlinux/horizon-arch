@@ -107,6 +107,7 @@ RUN pacman -Syu --noconfirm --overwrite "*" \
 	unzip \
 	vim \
 	whois \
+	fastfetch \
       ${DEV_DEPS} && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
@@ -141,6 +142,7 @@ RUN pacman -Syyuu --noconfirm \
        kde-cli-tools \
        kde-gtk-config \
        kdecoration \
+	   kdeconnect \
        kdeplasma-addons \
        kglobalacceld \
        kinfocenter \
@@ -151,6 +153,7 @@ RUN pacman -Syyuu --noconfirm \
        kio-gdrive \
        kio-zeroconf \
        audiocd-kio \
+	   khelpcenter \
        kmenuedit \
        knighttime \
        konsole \
@@ -169,6 +172,7 @@ RUN pacman -Syyuu --noconfirm \
        libplasma \
        milou \
        ocean-sound-theme \
+	   partitionmanager \
        pipewire \
        pipewire-audio \
        pipewire-pulse \
@@ -227,6 +231,7 @@ RUN systemctl enable sddm && \
   sed -i '/Current=/c\Current=breeze' /usr/lib/sddm/sddm.conf.d/default.conf && \
   sed -i '/CursorSize=/c\CursorSize=24' /usr/lib/sddm/sddm.conf.d/default.conf && \
   sed -i '/CursorTheme=/c\CursorTheme=breeze_cursors' /usr/lib/sddm/sddm.conf.d/default.conf && \
+  flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && \
   systemctl enable NetworkManager && \
   systemctl enable bluetooth && \
 # enable sysexts for later released sysexts like ones containg Wine, Steam, and drivers.
@@ -248,7 +253,11 @@ RUN rm -rf /var/cache/pacman/pkg/ && \
 	rm -rf /usr/share/applications/bssh.desktop && \
 	rm -rf /usr/share/applications/bvnc.desktop && \
 	rm -rf /usr/share/applications/qv4l2.desktop && \
-	rm -rf /usr/share/applications/qvidcap.desktop
+	rm -rf /usr/share/applications/qvidcap.desktop && \
+	rm -rf /usr/share/applications/assistant.desktop && \
+	rm -rf /usr/share/applications/designer.desktop && \
+	rm -rf /usr/share/applications/linguist.desktop && \
+	rm -rf /usr/share/applications/qdbusviewer.desktop
 
 RUN rm -rf /boot /home /root /usr/local /srv && \
     mkdir -p /var/{home,roothome,srv} /sysroot /boot && \
