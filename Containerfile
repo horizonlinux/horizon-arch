@@ -79,36 +79,34 @@ RUN pacman -Syu --noconfirm --overwrite "*" \
       nano \
       distrobox \
       podman \
-      linux-firmware \
-	linux-firmware-amdgpu \
-	linux-firmware-atheros \
-	linux-firmware-broadcom \
-	linux-firmware-intel \
-	linux-firmware-mediatek \
-	linux-firmware-other \
-	linux-firmware-radeon \
-	linux-firmware-realtek \
+      linux-firmware-* \
       cifs-utils \
-	firewalld \
-	fuse2 \
-	fuse3 \
-	fuse-common \
-	fwupd  \
-	gvfs-smb \
-	ifuse \
-	libcamera \
-	gst-plugin-libcamera \
-	libcamera-tools \
-	libimobiledevice \
-	man-db \
-	rclone \
-	unzip \
-	vim \
-	whois \
-	fastfetch \
+      firewalld \
+      fuse2 \
+      fuse3 \
+      fuse-common \
+      fwupd  \
+      gvfs-smb \
+      ifuse \
+      libcamera \
+      gst-plugin-libcamera \
+      libcamera-tools \
+      libimobiledevice \
+      man-db \
+      rclone \
+      unzip \
+      vim \
+      whois \
+      fastfetch \
       ${DEV_DEPS} && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
+
+# eff GNU ( as much it is possible to)
+RUN pacman -Syu --noconfirm \
+      uutils-coreutils \
+      sudo-rs \
+      bat
 
 RUN echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers && \
 echo "Defaults env_reset,pwfeedback" >> /etc/sudoers
