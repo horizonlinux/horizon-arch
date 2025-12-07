@@ -79,7 +79,7 @@ RUN pacman -Syu --noconfirm --overwrite "*" \
       nano \
       distrobox \
       podman \
-      linux-firmware-* \
+      $(pacman -Ss '^linux-firmware') \
       cifs-utils \
       firewalld \
       fuse2 \
