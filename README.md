@@ -1,5 +1,8 @@
 # <img width="2335" height="1296" alt="Horizon" src="https://raw.githubusercontent.com/horizonlinux/horizon/refs/heads/main/.github/logo.png" />
 
+# Archived
+This repo was archived due to us wating to make an atomic distro that is both x86_64 and ARM64, but due to Arch ARM not using `vmlinuz` to boot and current state of bootc composefs and systemd-boot on ARM it is impossible to do using Arch. Thank you for you interest.
+
 General use distro created using Arch Linux with BootC and composeFS.
 
 ## I need to install a package across the entire system. How do I do it?
